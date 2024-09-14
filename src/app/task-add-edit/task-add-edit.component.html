@@ -6,59 +6,38 @@
         <div class="row">
             <mat-form-field appearance="outline">
                 <mat-label>First name</mat-label>
-                <input matInput type="text" placeholder="Ex. Technical" formControlName="firstName">
+                <input matInput type="text" placeholder="Ex. Technical" formControlName="taskName">
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Last Name</mat-label>
-                <input matInput placeholder="Ex. Babaji" formControlName="lastName">
+                <input matInput placeholder="Ex. Babaji" formControlName="description">
             </mat-form-field>
         </div>
 
         <div class="row">
-            <mat-form-field appearance="outline">
-                <mat-label>Email</mat-label>
-                <input matInput type="email" placeholder="Ex. test@gmail.com" formControlName="email">
-            </mat-form-field>
+
             <mat-form-field appearance="outline">
                 <mat-label>Date of birth</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="dob">
+                <input matInput [matDatepicker]="picker" formControlName="dueDate">
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
         </div>
 
-        <div class="row">
-            <mat-radio-group aria-label="Select an option" formControlName="gender">
-                <mat-label><b>Gender</b></mat-label>
-                <mat-radio-button value="male">Male</mat-radio-button>
-                <mat-radio-button value="female">Female</mat-radio-button>
-                <mat-radio-button value="others">Others</mat-radio-button>
-            </mat-radio-group>
-        </div>
+
 
         <div class="row">
             <mat-form-field appearance="outline">
-                <mat-label>Education</mat-label>
+                <mat-label>Priority</mat-label>
                 <mat-select formControlName="priority">
                     <mat-option *ngFor="let val of priority" [value]="val">{{val}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline">
-                <mat-label>Company</mat-label>
-                <input matInput placeholder="Ex. Google" formControlName="company">
-            </mat-form-field>
-        </div>
-        <div class="row">
-            <mat-form-field appearance="outline">
-                <mat-label>Experience</mat-label>
-                <input matInput placeholder="Ex. 4" type="number" formControlName="experience">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Package</mat-label>
-                <input matInput placeholder="Ex. 12" type="number" formControlName="package">
-                <mat-hint>In rupees</mat-hint>
+                <mat-label>Assigned To</mat-label>
+                <input matInput placeholder="Ex. Google" formControlName="assignedTo">
             </mat-form-field>
         </div>
     </div>

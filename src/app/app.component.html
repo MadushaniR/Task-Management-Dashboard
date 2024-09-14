@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
-  <span>Crud Application</span>
+  <span>Task Treak</span>
   <span class="example-spacer"></span>
   <button mat-raised-button (click)="openAddEditTaskForm()">
-    ADD EMPLOYEE
+    ADD Task
   </button>
 </mat-toolbar>
 
@@ -12,7 +12,7 @@
 
   <mat-form-field>
     <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. task 1" #input>
   </mat-form-field>
 
   <div class="table-container">
@@ -20,54 +20,37 @@
 
       <!-- ID Column -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Task ID </th>
         <td mat-cell *matCellDef="let row"> {{row.id}} </td>
       </ng-container>
 
       <!-- Progress Column -->
-      <ng-container matColumnDef="firstName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.firstName}}</td>
+      <ng-container matColumnDef="taskName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Task Name </th>
+        <td mat-cell *matCellDef="let row"> {{row.taskName}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="lastName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.lastName}}</td>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+        <td mat-cell *matCellDef="let row"> {{row.description}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-        <td mat-cell *matCellDef="let row"> {{row.email}}</td>
+
+
+      <ng-container matColumnDef="dueDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> dueDate </th>
+        <td mat-cell *matCellDef="let row"> {{row.dueDate | date}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="dob">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> dob </th>
-        <td mat-cell *matCellDef="let row"> {{row.dob | date}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="gender">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> gender </th>
-        <td mat-cell *matCellDef="let row"> {{row.gender}}</td>
-      </ng-container>
 
       <ng-container matColumnDef="priority">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Education </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
         <td mat-cell *matCellDef="let row"> {{row.priority}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="company">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Company </th>
-        <td mat-cell *matCellDef="let row"> {{row.company}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="experience">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Exp. </th>
-        <td mat-cell *matCellDef="let row"> {{row.experience}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="package">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Package </th>
-        <td mat-cell *matCellDef="let row"> {{row.package | currency:'INR'}}L</td>
+      <ng-container matColumnDef="assignedTo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Assigned To </th>
+        <td mat-cell *matCellDef="let row"> {{row.assignedTo}}</td>
       </ng-container>
 
       <ng-container matColumnDef="action">

@@ -26,15 +26,11 @@ export class TaskAddEditComponent implements OnInit {
     private _coreService: CoreService
   ) {
     this.taskForm = this._fb.group({
-      firstName: '',
-      lastName: '',
-      email: '',
-      dob: '',
-      gender: '',
+      taskName: '',
+      description: '',
+      dueDate: '',
       priority: '',
-      company: '',
-      experience: '',
-      package: '',
+      assignedTo: '',
     });
   }
 
