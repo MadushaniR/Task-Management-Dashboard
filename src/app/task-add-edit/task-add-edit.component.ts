@@ -2,15 +2,15 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from '../core/core.service';
-import { EmployeeService } from '../services/employee.service';
+import { TaskService } from '../services/task.service';
 
 @Component({
-  selector: 'app-emp-add-edit',
-  templateUrl: './emp-add-edit.component.html',
-  styleUrls: ['./emp-add-edit.component.scss'],
+  selector: 'task-task-add-edit',
+  templateUrl: './task-add-edit.component.html',
+  styleUrls: ['./task-add-edit.component.scss'],
 })
-export class EmpAddEditComponent implements OnInit {
-  empForm: FormGroup;
+export class TaskAddEditComponent implements OnInit {
+  taskForm: FormGroup;
 
   education: string[] = [
     'Matric',
@@ -22,12 +22,12 @@ export class EmpAddEditComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _empService: EmployeeService,
-    private _dialogRef: MatDialogRef<EmpAddEditComponent>,
+    private _taskService: TaskService,
+    private _dialogRef: MatDialogRef<TaskAddEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _coreService: CoreService
   ) {
-    this.empForm = this._fb.group({
+    this.taskForm = this._fb.group({
       firstName: '',
       lastName: '',
       email: '',
@@ -41,17 +41,17 @@ export class EmpAddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.empForm.patchValue(this.data);
+    this.taskForm.patchValue(this.data);
   }
 
   onFormSubmit() {
-    if (this.empForm.valid) {
+    if (this.taskForm.valid) {
       if (this.data) {
-        this._empService
-          .updateEmployee(this.data.id, this.empForm.value)
+        this._taskService
+          .updateTask(this.data.id, this.taskForm.value)
           .subscribe({
             next: (val: any) => {
-              this._coreService.openSnackBar('Employee detail updated!');
+              this._coreService.openSnackBar('Task detail updated!');
               this._dialogRef.close(true);
             },
             error: (err: any) => {
@@ -59,9 +59,9 @@ export class EmpAddEditComponent implements OnInit {
             },
           });
       } else {
-        this._empService.addEmployee(this.empForm.value).subscribe({
+        this._taskService.addTask(this.taskForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Employee added successfully');
+            this._coreService.openSnackBar('Task added successfully');
             this._dialogRef.close(true);
           },
           error: (err: any) => {

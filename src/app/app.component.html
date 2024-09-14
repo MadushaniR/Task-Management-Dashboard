@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <span>Crud Application</span>
   <span class="example-spacer"></span>
-  <button mat-raised-button (click)="openAddEditEmpForm()">
+  <button mat-raised-button (click)="openAddEditTaskForm()">
     ADD EMPLOYEE
   </button>
 </mat-toolbar>
@@ -76,7 +76,7 @@
           <button mat-icon-button color="primary" (click)="openEditForm(row)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteEmployee(row.id)">
+          <button mat-icon-button color="warn" (click)="deleteTask(row.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>

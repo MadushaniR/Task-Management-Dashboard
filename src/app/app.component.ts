@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { EmpAddEditComponent } from './emp-add-edit/emp-add-edit.component';
-import { EmployeeService } from './services/employee.service';
+import { TaskAddEditComponent } from './task-add-edit/task-add-edit.component';
+import { TaskService } from './services/task.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -33,27 +33,27 @@ export class AppComponent implements OnInit {
 
   constructor(
     private _dialog: MatDialog,
-    private _empService: EmployeeService,
+    private _taskService: TaskService,
     private _coreService: CoreService
   ) {}
 
   ngOnInit(): void {
-    this.getEmployeeList();
+    this.getTaskList();
   }
 
-  openAddEditEmpForm() {
-    const dialogRef = this._dialog.open(EmpAddEditComponent);
+  openAddEditTaskForm() {
+    const dialogRef = this._dialog.open(TaskAddEditComponent);
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getEmployeeList();
+          this.getTaskList();
         }
       },
     });
   }
 
-  getEmployeeList() {
-    this._empService.getEmployeeList().subscribe({
+  getTaskList() {
+    this._taskService.getTaskList().subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.sort = this.sort;
@@ -72,25 +72,25 @@ export class AppComponent implements OnInit {
     }
   }
 
-  deleteEmployee(id: number) {
-    this._empService.deleteEmployee(id).subscribe({
+  deleteTask(id: number) {
+    this._taskService.deleteTask(id).subscribe({
       next: (res) => {
-        this._coreService.openSnackBar('Employee deleted!', 'done');
-        this.getEmployeeList();
+        this._coreService.openSnackBar('Task deleted!', 'done');
+        this.getTaskList();
       },
       error: console.log,
     });
   }
 
   openEditForm(data: any) {
-    const dialogRef = this._dialog.open(EmpAddEditComponent, {
+    const dialogRef = this._dialog.open(TaskAddEditComponent, {
       data,
     });
 
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getEmployeeList();
+          this.getTaskList();
         }
       },
     });
