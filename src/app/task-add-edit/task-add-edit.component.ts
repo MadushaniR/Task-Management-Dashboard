@@ -12,7 +12,7 @@ import { TaskService } from '../services/task.service';
 export class TaskAddEditComponent implements OnInit {
   taskForm: FormGroup;
 
-  education: string[] = [
+  priority: string[] = [
     'Matric',
     'Diploma',
     'Intermediate',
@@ -33,7 +33,7 @@ export class TaskAddEditComponent implements OnInit {
       email: '',
       dob: '',
       gender: '',
-      education: '',
+      priority: '',
       company: '',
       experience: '',
       package: '',

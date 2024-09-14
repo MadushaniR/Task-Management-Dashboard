@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     'email',
     'dob',
     'gender',
-    'education',
+    'priority',
     'company',
     'experience',
     'package',
