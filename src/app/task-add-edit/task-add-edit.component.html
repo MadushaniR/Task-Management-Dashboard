@@ -5,19 +5,21 @@
     <div mat-dialog-content class="content">
         <div class="row">
             <mat-form-field appearance="outline">
-                <mat-label>First name</mat-label>
-                <input matInput type="text" placeholder="Ex. Technical" formControlName="taskName">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Last Name</mat-label>
-                <input matInput placeholder="Ex. Babaji" formControlName="description">
+                <mat-label>Task Name</mat-label>
+                <input matInput type="text" placeholder="Task 1" formControlName="taskName">
             </mat-form-field>
         </div>
 
         <div class="row">
-
             <mat-form-field appearance="outline">
-                <mat-label>Date of birth</mat-label>
+                <mat-label>Description</mat-label>
+                <input matInput placeholder="this is task 1" formControlName="description">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label>Due Date</mat-label>
                 <input matInput [matDatepicker]="picker" formControlName="dueDate">
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -25,14 +27,11 @@
             </mat-form-field>
         </div>
 
-
-
         <div class="row">
             <mat-form-field appearance="outline">
                 <mat-label>Priority</mat-label>
                 <mat-select formControlName="priority">
-                    <mat-option *ngFor="let val of priority" [value]="val">{{val}}
-                    </mat-option>
+                    <mat-option *ngFor="let val of priority" [value]="val">{{val}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline">
@@ -43,6 +42,6 @@
     </div>
     <div mat-dialog-actions class="action">
         <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
-        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Update' : 'Save'}}</button>
     </div>
 </form>
