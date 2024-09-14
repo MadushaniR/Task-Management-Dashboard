@@ -13,11 +13,9 @@ export class TaskAddEditComponent implements OnInit {
   taskForm: FormGroup;
 
   priority: string[] = [
-    'Matric',
-    'Diploma',
-    'Intermediate',
-    'Graduate',
-    'Post Graduate',
+    'Low',
+    'Medium',
+    'High',
   ];
 
   constructor(
