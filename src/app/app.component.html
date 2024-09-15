@@ -61,11 +61,12 @@
           <button mat-icon-button color="primary" (click)="openEditForm(row)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteTask(row.id)">
+          <button mat-icon-button color="warn" (click)="openDeleteConfirmation(row.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
       </ng-container>
+      
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

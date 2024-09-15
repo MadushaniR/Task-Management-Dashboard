@@ -21,9 +21,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, TaskAddEditComponent],
+  declarations: [AppComponent, TaskAddEditComponent, DeleteConfirmationDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CoreService } from './core/core.service';
+import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -76,15 +77,32 @@ export class AppComponent implements OnInit {
   }
 
   // Delete a task by ID
-  deleteTask(id: number) {
-    this._taskService.deleteTask(id).subscribe({
-      next: (res) => {
-        this._coreService.openSnackBar('Task deleted!', 'done');
-        this.getTaskList();
-      },
-      error: console.log,
+
+  openDeleteConfirmation(id: number) {
+    const dialogRef = this._dialog.open(DeleteConfirmationDialogComponent);
+  
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this._taskService.deleteTask(id).subscribe({
+          next: (res) => {
+            this._coreService.openSnackBar('Task deleted!', 'done');
+            this.getTaskList();
+          },
+          error: console.log,
+        });
+      }
     });
   }
+  
+  // deleteTask(id: number) {
+  //   this._taskService.deleteTask(id).subscribe({
+  //     next: (res) => {
+  //       this._coreService.openSnackBar('Task deleted!', 'done');
+  //       this.getTaskList();
+  //     },
+  //     error: console.log,
+  //   });
+  // }
 
   // Open the Edit Task Form with Data
   openEditForm(data: any) {
