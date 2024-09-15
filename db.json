@@ -31,22 +31,6 @@
       "dueDate": "2024-10-05T12:09:39Z",
       "priority": "Low",
       "assignedTo": "Rox"
-    },
-    {
-      "id": "a2fa",
-      "taskName": "assd",
-      "description": "af",
-      "dueDate": "2024-09-24T18:30:00.000Z",
-      "priority": "Low",
-      "assignedTo": "dgs"
-    },
-    {
-      "id": "d289",
-      "taskName": "qwe",
-      "description": "sdf",
-      "dueDate": "2024-09-17T18:30:00.000Z",
-      "priority": "Low",
-      "assignedTo": "dfv"
     }
   ]
 }
