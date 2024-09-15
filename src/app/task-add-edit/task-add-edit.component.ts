@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from '../core/core.service';
 import { TaskService } from '../services/task.service';
@@ -12,12 +12,22 @@ import { TaskService } from '../services/task.service';
 export class TaskAddEditComponent implements OnInit {
   taskForm: FormGroup;
 
-  education: string[] = [
-    'Matric',
-    'Diploma',
-    'Intermediate',
-    'Graduate',
-    'Post Graduate',
+  priority: string[] = [
+    'Low',
+    'Medium',
+    'High',
+  ];
+
+  status: string[] = [
+    'To do',
+    'In Progress',
+    'Completed',
+  ];
+
+  assignedTo: string[] = [
+    'Anne',
+    'Roy',
+    'Tom',
   ];
 
   constructor(
@@ -28,15 +38,12 @@ export class TaskAddEditComponent implements OnInit {
     private _coreService: CoreService
   ) {
     this.taskForm = this._fb.group({
-      firstName: '',
-      lastName: '',
-      email: '',
-      dob: '',
-      gender: '',
-      education: '',
-      company: '',
-      experience: '',
-      package: '',
+      taskName: '',
+      description: '',
+      dueDate: '',
+      priority: '',
+      status: '',
+      assignedTo: '',
     });
   }
 
