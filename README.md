@@ -2,6 +2,23 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.1.
 
+# Project Setup and Instructions
+
+This project involves running a `json-server` to simulate a backend API and an Angular frontend. Follow the steps below to set up and run the application.
+
+Running the Application
+1. Start the Mock API Server
+To run the json-server with the db.json file use following command:
+
+json-server --watch db.json
+
+This will start the mock server at http://localhost:3000.
+
+2. Run the Angular Application
+To start the Angular development server, use:
+
+ng serve
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
