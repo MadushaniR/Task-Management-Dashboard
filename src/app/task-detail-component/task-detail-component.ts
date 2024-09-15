@@ -5,7 +5,7 @@ import { TaskService } from '../services/task.service';
 @Component({
   selector: 'app-task-detail-component',
   templateUrl: './task-detail-component.html',
-  styleUrls: ['./task-detail-component.component.scss']
+  styleUrls: ['./task-detail-component.scss']
 })
 export class TaskDetailComponent implements OnInit {
   taskId!: number;

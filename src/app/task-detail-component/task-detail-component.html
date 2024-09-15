@@ -1,9 +1,9 @@
-<button mat-raised-button color="primary" (click)="goBack()">
+<button mat-raised-button (click)="goBack()">
   ← Go Back
 </button>
 
 <!-- Task Details Section -->
-<div *ngIf="taskData">
+<div *ngIf="taskData" class="task-details-container">
   <h1>Task Details for {{ taskData.taskName }}</h1>
   <p>Description: {{ taskData.description }}</p>
   <p>Due Date: {{ taskData.dueDate }}</p>
