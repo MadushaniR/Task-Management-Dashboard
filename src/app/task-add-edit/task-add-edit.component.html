@@ -6,7 +6,7 @@
         <div class="row">
             <mat-form-field appearance="outline">
                 <mat-label>Task Name</mat-label>
-                <input matInput type="text" placeholder="Task 1" formControlName="taskName">
+                <input matInput type="text" placeholder="Task 1" formControlName="taskName" required>
             </mat-form-field>
         </div>
 
@@ -20,7 +20,7 @@
         <div class="row">
             <mat-form-field appearance="outline">
                 <mat-label>Due Date</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="dueDate">
+                <input matInput [matDatepicker]="picker" formControlName="dueDate" required>
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
@@ -40,7 +40,7 @@
         <div class="row">
             <mat-form-field appearance="outline">
                 <mat-label>Priority</mat-label>
-                <mat-select formControlName="priority">
+                <mat-select formControlName="priority" required>
                     <mat-option *ngFor="let val of priority" [value]="val">{{val}}</mat-option>
                 </mat-select>
             </mat-form-field>

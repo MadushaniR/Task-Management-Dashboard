@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
   displayedColumns: string[] = [
-  
     'taskName',
     'description',
     'dueDate',
@@ -41,8 +40,10 @@ export class AppComponent implements OnInit {
     this.getTaskList();
   }
 
+  // Open the Add/Edit Task Form
   openAddEditTaskForm() {
     const dialogRef = this._dialog.open(TaskAddEditComponent);
+    
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
@@ -52,6 +53,7 @@ export class AppComponent implements OnInit {
     });
   }
 
+  // Fetch Task List from the Service
   getTaskList() {
     this._taskService.getTaskList().subscribe({
       next: (res) => {
@@ -63,6 +65,7 @@ export class AppComponent implements OnInit {
     });
   }
 
+  // Apply filter on the task list
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -72,6 +75,7 @@ export class AppComponent implements OnInit {
     }
   }
 
+  // Delete a task by ID
   deleteTask(id: number) {
     this._taskService.deleteTask(id).subscribe({
       next: (res) => {
@@ -82,9 +86,10 @@ export class AppComponent implements OnInit {
     });
   }
 
+  // Open the Edit Task Form with Data
   openEditForm(data: any) {
     const dialogRef = this._dialog.open(TaskAddEditComponent, {
-      data,
+      data, // Passing the task data for editing
     });
 
     dialogRef.afterClosed().subscribe({
