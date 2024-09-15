@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
     'description',
     'dueDate',
     'priority',
+    'status',
     'assignedTo',
     'action',
   ];

@@ -18,6 +18,18 @@ export class TaskAddEditComponent implements OnInit {
     'High',
   ];
 
+  status: string[] = [
+    'To do',
+    'In Progress',
+    'Completed',
+  ];
+
+  assignedTo: string[] = [
+    'Anne',
+    'Roy',
+    'Tom',
+  ];
+
   constructor(
     private _fb: FormBuilder,
     private _taskService: TaskService,
@@ -30,6 +42,7 @@ export class TaskAddEditComponent implements OnInit {
       description: '',
       dueDate: '',
       priority: '',
+      status: '',
       assignedTo: '',
     });
   }

@@ -29,6 +29,16 @@
 
         <div class="row">
             <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option *ngFor="let val of status" [value]="val">{{val}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+        </div>
+
+        <div class="row">
+            <mat-form-field appearance="outline">
                 <mat-label>Priority</mat-label>
                 <mat-select formControlName="priority">
                     <mat-option *ngFor="let val of priority" [value]="val">{{val}}</mat-option>
@@ -36,7 +46,9 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Assigned To</mat-label>
-                <input matInput placeholder="Ex. Google" formControlName="assignedTo">
+                <mat-select formControlName="assignedTo">
+                    <mat-option *ngFor="let val of assignedTo" [value]="val">{{val}}</mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
     </div>
