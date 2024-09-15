@@ -1,20 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { TaskAddEditComponent } from './task-add-edit/task-add-edit.component';
-import { TaskService } from './services/task.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CoreService } from './core/core.service';
-import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
-import {TaskDetailComponentComponent} from './task-detail-component/task-detail-component.component';
+import { TaskService } from '../services/task.service';
+import { CoreService } from '../core/core.service';
+import { TaskAddEditComponent } from '../task-add-edit/task-add-edit.component';
+import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-all-tasks',
+  templateUrl: './all-tasks.component.html',
+  styleUrls: ['./all-tasks.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AllTasksComponent implements OnInit {
+
   title(title: any) {
     throw new Error('Method not implemented.');
   }
@@ -120,3 +120,4 @@ export class AppComponent implements OnInit {
     });
   }
 }
+

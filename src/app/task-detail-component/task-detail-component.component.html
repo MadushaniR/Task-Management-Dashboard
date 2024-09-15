@@ -1,0 +1,21 @@
+<div *ngIf="taskData">
+    <h1>Task Details for {{ taskData.taskName }}</h1>
+    <p>Description: {{ taskData.description }}</p>
+    <p>Due Date: {{ taskData.dueDate }}</p>
+    <p>Priority: {{ taskData.priority }}</p>
+    <p>Assigned To: {{ taskData.assignedTo }}</p>
+    <p>Status: {{ taskData.status }}</p>
+  
+    <!-- Display subtasks -->
+    <h2>Subtasks</h2>
+    <ul>
+      <li *ngFor="let subtask of taskData.subtasks">{{ subtask.name }}</li>
+    </ul>
+    
+    <!-- Display comments -->
+    <h2>Comments</h2>
+    <ul>
+      <li *ngFor="let comment of taskData.comments">{{ comment.text }}</li>
+    </ul>
+
+  
