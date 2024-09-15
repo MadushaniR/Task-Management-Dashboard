@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../services/task.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class TaskDetailComponentComponent implements OnInit {
   taskData: any;
 
   constructor(
-    private route: ActivatedRoute,
+    private router: Router, private route: ActivatedRoute,
     private taskService: TaskService
   ) {}
 
@@ -29,4 +29,9 @@ export class TaskDetailComponentComponent implements OnInit {
       error: (err: any) => console.error(err)
     });
   }
+
+  goBack(): void {
+    this.router.navigate(['/tasks']);
+  }
+  
 }

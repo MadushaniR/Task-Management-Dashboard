@@ -1,3 +1,6 @@
+<button mat-raised-button color="primary" (click)="goBack()">
+    ← Go Back
+  </button>
 <div *ngIf="taskData">
     <h1>Task Details for {{ taskData.taskName }}</h1>
     <p>Description: {{ taskData.description }}</p>
@@ -18,4 +21,4 @@
       <li *ngFor="let comment of taskData.comments">{{ comment.text }}</li>
     </ul>
 
-  
+</div> 
