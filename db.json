@@ -1,21 +1,4 @@
 {
-  "posts": [
-    {
-      "id": "1",
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
-    {
-      "id": "1",
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  },
   "tasks": [
     {
       "id": "1",
@@ -48,6 +31,22 @@
       "dueDate": "2024-10-05T12:09:39Z",
       "priority": "Low",
       "assignedTo": "Rox"
+    },
+    {
+      "id": "a2fa",
+      "taskName": "assd",
+      "description": "af",
+      "dueDate": "2024-09-24T18:30:00.000Z",
+      "priority": "Low",
+      "assignedTo": "dgs"
+    },
+    {
+      "id": "d289",
+      "taskName": "qwe",
+      "description": "sdf",
+      "dueDate": "2024-09-17T18:30:00.000Z",
+      "priority": "Low",
+      "assignedTo": "dfv"
     }
   ]
 }
