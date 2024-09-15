@@ -38,10 +38,10 @@ export class TaskDetailComponentComponent implements OnInit {
 
   addSubtask() {
     if (this.newSubtask.trim()) {
-      const subtask = { subtask_title: this.newSubtask.trim() };
+      const subtask = { subtask_title: this.newSubtask.trim() }; // Ensure this matches server expectations
       this.taskService.addSubtask(this.taskId, subtask).subscribe({
-        next: (data: any) => {
-          this.taskData.subtasks.push(data);
+        next: (updatedTask: any) => {
+          this.taskData = updatedTask; // Update taskData with the complete updated task
           this.newSubtask = '';
         },
         error: (err: any) => console.error(err)
@@ -51,15 +51,14 @@ export class TaskDetailComponentComponent implements OnInit {
 
   addComment() {
     if (this.newComment.trim()) {
-      const comment = { text: this.newComment.trim() };
+      const comment = { text: this.newComment.trim() }; // Ensure this matches server expectations
       this.taskService.addComment(this.taskId, comment).subscribe({
-        next: (data: any) => {
-          this.taskData.comments.push(data);
+        next: (updatedTask: any) => {
+          this.taskData = updatedTask; // Update taskData with the complete updated task
           this.newComment = '';
         },
         error: (err: any) => console.error(err)
       });
     }
   }
-  
 }
