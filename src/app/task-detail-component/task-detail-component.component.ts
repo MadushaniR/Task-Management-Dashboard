@@ -10,6 +10,8 @@ import { TaskService } from '../services/task.service';
 export class TaskDetailComponentComponent implements OnInit {
   taskId!: number;
   taskData: any;
+  newSubtask: string = '';
+  newComment: string = '';
 
   constructor(
     private router: Router, private route: ActivatedRoute,
@@ -32,6 +34,32 @@ export class TaskDetailComponentComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/tasks']);
+  }
+
+  addSubtask() {
+    if (this.newSubtask.trim()) {
+      const subtask = { name: this.newSubtask.trim() };
+      this.taskService.addSubtask(this.taskId, subtask).subscribe({
+        next: (data: any) => {
+          this.taskData.subtasks.push(data);
+          this.newSubtask = '';
+        },
+        error: (err: any) => console.error(err)
+      });
+    }
+  }
+
+  addComment() {
+    if (this.newComment.trim()) {
+      const comment = { text: this.newComment.trim() };
+      this.taskService.addComment(this.taskId, comment).subscribe({
+        next: (data: any) => {
+          this.taskData.comments.push(data);
+          this.newComment = '';
+        },
+        error: (err: any) => console.error(err)
+      });
+    }
   }
   
 }

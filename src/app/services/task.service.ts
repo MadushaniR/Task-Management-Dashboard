@@ -27,4 +27,15 @@ export class TaskService {
   getTaskById(id: number): Observable<any> {
     return this._http.get(`http://localhost:3000/tasks/${id}`);
   }
+
+  // New Methods for Subtasks
+  addSubtask(taskId: number, subtask: any): Observable<any> {
+    return this._http.post(`http://localhost:3000/tasks/${taskId}/subtasks`, subtask);
+  }
+
+  // New Methods for Comments
+  addComment(taskId: number, comment: any): Observable<any> {
+    return this._http.post(`http://localhost:3000/tasks/${taskId}/comments`, comment);
+  }
+
 }
