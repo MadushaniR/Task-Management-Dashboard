@@ -24,6 +24,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { TaskDetailComponentComponent } from './task-detail-component/task-detail-component.component';
 import { AllTasksComponent } from './all-tasks/all-tasks.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, TaskAddEditComponent, DeleteConfirmationDialogComponent, TaskDetailComponentComponent, AllTasksComponent],
@@ -47,6 +48,7 @@ import { AllTasksComponent } from './all-tasks/all-tasks.component';
     MatPaginatorModule,
     MatSortModule,
     MatSnackBarModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

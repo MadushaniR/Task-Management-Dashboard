@@ -10,6 +10,8 @@ import { TaskService } from '../services/task.service';
 export class TaskDetailComponentComponent implements OnInit {
   taskId!: number;
   taskData: any;
+  newSubtask: string = '';
+  newComment: string = '';
 
   constructor(
     private router: Router, private route: ActivatedRoute,
@@ -33,5 +35,30 @@ export class TaskDetailComponentComponent implements OnInit {
   goBack(): void {
     this.router.navigate(['/tasks']);
   }
-  
+
+  addSubtask() {
+    if (this.newSubtask.trim()) {
+      const subtask = { subtask_title: this.newSubtask.trim() }; // Ensure this matches server expectations
+      this.taskService.addSubtask(this.taskId, subtask).subscribe({
+        next: (updatedTask: any) => {
+          this.taskData = updatedTask; // Update taskData with the complete updated task
+          this.newSubtask = '';
+        },
+        error: (err: any) => console.error(err)
+      });
+    }
+  }
+
+  addComment() {
+    if (this.newComment.trim()) {
+      const comment = { text: this.newComment.trim() }; // Ensure this matches server expectations
+      this.taskService.addComment(this.taskId, comment).subscribe({
+        next: (updatedTask: any) => {
+          this.taskData = updatedTask; // Update taskData with the complete updated task
+          this.newComment = '';
+        },
+        error: (err: any) => console.error(err)
+      });
+    }
+  }
 }

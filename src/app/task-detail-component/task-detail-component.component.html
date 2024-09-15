@@ -1,7 +1,8 @@
 <button mat-raised-button color="primary" (click)="goBack()">
     ← Go Back
   </button>
-<div *ngIf="taskData">
+  
+  <div *ngIf="taskData">
     <h1>Task Details for {{ taskData.taskName }}</h1>
     <p>Description: {{ taskData.description }}</p>
     <p>Due Date: {{ taskData.dueDate }}</p>
@@ -9,16 +10,26 @@
     <p>Assigned To: {{ taskData.assignedTo }}</p>
     <p>Status: {{ taskData.status }}</p>
   
-    <!-- Display subtasks -->
+    <!-- Subtasks Section -->
     <h2>Subtasks</h2>
     <ul>
-      <li *ngFor="let subtask of taskData.subtasks">{{ subtask.name }}</li>
+      <li *ngFor="let subtask of taskData.subtasks">{{ subtask.subtask_title }}</li>
     </ul>
-    
-    <!-- Display comments -->
+    <mat-form-field appearance="fill">
+      <mat-label>Add Subtask</mat-label>
+      <input matInput [(ngModel)]="newSubtask" placeholder="Enter subtask name">
+      <button mat-raised-button color="primary" (click)="addSubtask()">Add Subtask</button>
+    </mat-form-field>
+  
+    <!-- Comments Section -->
     <h2>Comments</h2>
     <ul>
       <li *ngFor="let comment of taskData.comments">{{ comment.text }}</li>
     </ul>
-
-</div> 
+    <mat-form-field appearance="fill">
+      <mat-label>Add Comment</mat-label>
+      <textarea matInput [(ngModel)]="newComment" placeholder="Enter your comment"></textarea>
+      <button mat-raised-button color="primary" (click)="addComment()">Add Comment</button>
+    </mat-form-field>
+  </div>
+  
