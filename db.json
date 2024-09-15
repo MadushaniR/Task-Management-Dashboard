@@ -7,7 +7,31 @@
       "dueDate": "2024-10-05T12:09:39Z",
       "priority": "High",
       "status": "In Progress",
-      "assignedTo": "Anne"
+      "assignedTo": "Anne",
+      "subtasks": [
+        {
+          "id": "1",
+          "title": "Design login UI",
+          "completed": false
+        },
+        {
+          "id": "2",
+          "title": "Implement validation",
+          "completed": false
+        }
+      ],
+      "comments": [
+        {
+          "id": "1",
+          "author": "Tom",
+          "content": "UI design looks great!"
+        },
+        {
+          "id": "2",
+          "author": "Roy",
+          "content": "We might need to change validation for edge cases."
+        }
+      ]
     },
     {
       "id": "2",
@@ -16,7 +40,26 @@
       "dueDate": "2024-10-05T12:09:39Z",
       "priority": "Medium",
       "status": "In Progress",
-      "assignedTo": "Anne"
+      "assignedTo": "Anne",
+      "subtasks": [
+        {
+          "id": "1",
+          "title": "Design home UI",
+          "completed": true
+        },
+        {
+          "id": "2",
+          "title": "Implement sliders",
+          "completed": false
+        }
+      ],
+      "comments": [
+        {
+          "id": "1",
+          "author": "Anne",
+          "content": "Homepage looks good."
+        }
+      ]
     },
     {
       "id": "3",
@@ -25,7 +68,9 @@
       "dueDate": "2024-10-05T12:09:39Z",
       "priority": "High",
       "status": "To Do",
-      "assignedTo": "Roy"
+      "assignedTo": "Roy",
+      "subtasks": [],
+      "comments": []
     },
     {
       "id": "4",
@@ -34,7 +79,9 @@
       "dueDate": "2024-10-05T12:09:39Z",
       "priority": "Low",
       "status": "Completed",
-      "assignedTo": "Tom"
+      "assignedTo": "Tom",
+      "subtasks": [],
+      "comments": []
     }
   ]
 }

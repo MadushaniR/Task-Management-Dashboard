@@ -21,9 +21,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { TaskDetailComponentComponent } from './task-detail-component/task-detail-component.component';
+import { AllTasksComponent } from './all-tasks/all-tasks.component';
 
 @NgModule({
-  declarations: [AppComponent, TaskAddEditComponent],
+  declarations: [AppComponent, TaskAddEditComponent, DeleteConfirmationDialogComponent, TaskDetailComponentComponent, AllTasksComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
