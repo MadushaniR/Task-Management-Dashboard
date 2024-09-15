@@ -36,7 +36,7 @@ export class AllTasksComponent implements OnInit {
     private _dialog: MatDialog,
     private _taskService: TaskService,
     private _coreService: CoreService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getTaskList();
@@ -45,7 +45,7 @@ export class AllTasksComponent implements OnInit {
   // Open the Add/Edit Task Form
   openAddEditTaskForm() {
     const dialogRef = this._dialog.open(TaskAddEditComponent);
-    
+
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
@@ -78,10 +78,8 @@ export class AllTasksComponent implements OnInit {
   }
 
   // Delete a task by ID
-
   openDeleteConfirmation(id: number) {
     const dialogRef = this._dialog.open(DeleteConfirmationDialogComponent);
-  
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this._taskService.deleteTask(id).subscribe({
@@ -94,16 +92,6 @@ export class AllTasksComponent implements OnInit {
       }
     });
   }
-  
-  // deleteTask(id: number) {
-  //   this._taskService.deleteTask(id).subscribe({
-  //     next: (res) => {
-  //       this._coreService.openSnackBar('Task deleted!', 'done');
-  //       this.getTaskList();
-  //     },
-  //     error: console.log,
-  //   });
-  // }
 
   // Open the Edit Task Form with Data
   openEditForm(data: any) {
