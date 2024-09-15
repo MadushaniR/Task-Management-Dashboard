@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
+  private baseUrl = 'http://localhost:3000/tasks';
   constructor(private _http: HttpClient) {}
 
   addTask(data: any): Observable<any> {
@@ -28,14 +29,34 @@ export class TaskService {
     return this._http.get(`http://localhost:3000/tasks/${id}`);
   }
 
-  // New Methods for Subtasks
-  addSubtask(taskId: number, subtask: any): Observable<any> {
-    return this._http.post(`http://localhost:3000/tasks/${taskId}/subtasks`, subtask);
-  }
+    // Method to add a subtask
+    addSubtask(taskId: number, subtask: any): Observable<any> {
+      return this._http.get(`${this.baseUrl}/${taskId}`).pipe(
+        switchMap((task: any) => {
+          const updatedTask = { ...task, subtasks: [...task.subtasks, subtask] };
+          return this._http.put(`${this.baseUrl}/${taskId}`, updatedTask);
+        })
+      );
+    }
+  
+    // Method to add a comment
+    addComment(taskId: number, comment: any): Observable<any> {
+      return this._http.get(`${this.baseUrl}/${taskId}`).pipe(
+        switchMap((task: any) => {
+          const updatedTask = { ...task, comments: [...task.comments, comment] };
+          return this._http.put(`${this.baseUrl}/${taskId}`, updatedTask);
+        })
+      );
+    }
 
-  // New Methods for Comments
-  addComment(taskId: number, comment: any): Observable<any> {
-    return this._http.post(`http://localhost:3000/tasks/${taskId}/comments`, comment);
-  }
+  // // New Methods for Subtasks
+  // addSubtask(taskId: number, subtask: any): Observable<any> {
+  //   return this._http.post(`http://localhost:3000/tasks/${taskId}/subtasks`, subtask);
+  // }
+
+  // // New Methods for Comments
+  // addComment(taskId: number, comment: any): Observable<any> {
+  //   return this._http.post(`http://localhost:3000/tasks/${taskId}/comments`, comment);
+  // }
 
 }

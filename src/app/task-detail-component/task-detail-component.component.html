@@ -13,7 +13,7 @@
     <!-- Subtasks Section -->
     <h2>Subtasks</h2>
     <ul>
-      <li *ngFor="let subtask of taskData.subtasks">{{ subtask.title }}</li>
+      <li *ngFor="let subtask of taskData.subtasks">{{ subtask.subtask_title }}</li>
     </ul>
     <mat-form-field appearance="fill">
       <mat-label>Add Subtask</mat-label>
@@ -24,7 +24,7 @@
     <!-- Comments Section -->
     <h2>Comments</h2>
     <ul>
-      <li *ngFor="let comment of taskData.comments">{{ comment.content }}</li>
+      <li *ngFor="let comment of taskData.comments">{{ comment.text }}</li>
     </ul>
     <mat-form-field appearance="fill">
       <mat-label>Add Comment</mat-label>

@@ -10,26 +10,18 @@
       "assignedTo": "Anne",
       "subtasks": [
         {
-          "id": "1",
-          "title": "Design login UI",
-          "completed": false
+          "subtask_title": "Design login UI"
         },
         {
-          "id": "2",
-          "title": "Implement validation",
-          "completed": false
+          "subtask_title": "Implement validation"
         }
       ],
       "comments": [
         {
-          "id": "1",
-          "author": "Tom",
-          "content": "UI design looks great!"
+          "text": "UI design looks great!"
         },
         {
-          "id": "2",
-          "author": "Roy",
-          "content": "We might need to change validation for edge cases."
+          "text": "We might need to change validation for edge cases."
         }
       ]
     },
@@ -43,21 +35,27 @@
       "assignedTo": "Anne",
       "subtasks": [
         {
-          "id": "1",
-          "title": "Design home UI",
-          "completed": true
+          "subtask_title": "Design home UI"
         },
         {
-          "id": "2",
-          "title": "Implement sliders",
-          "completed": false
+          "subtask_title": "Implement sliders"
+        },
+        {
+          "subtask_title": "dfbfdb"
+        },
+        {
+          "subtask_title": "dvfdbf"
         }
       ],
       "comments": [
         {
-          "id": "1",
-          "author": "Anne",
-          "content": "Homepage looks good."
+          "text": "Homepage looks good."
+        },
+        {
+          "text": "dfdf"
+        },
+        {
+          "text": "ddfg"
         }
       ]
     },

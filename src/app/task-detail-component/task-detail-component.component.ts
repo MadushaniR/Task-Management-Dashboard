@@ -38,7 +38,7 @@ export class TaskDetailComponentComponent implements OnInit {
 
   addSubtask() {
     if (this.newSubtask.trim()) {
-      const subtask = { name: this.newSubtask.trim() };
+      const subtask = { subtask_title: this.newSubtask.trim() };
       this.taskService.addSubtask(this.taskId, subtask).subscribe({
         next: (data: any) => {
           this.taskData.subtasks.push(data);
