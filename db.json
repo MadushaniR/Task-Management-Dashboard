@@ -55,8 +55,16 @@
       "priority": "High",
       "status": "To Do",
       "assignedTo": "Roy",
-      "subtasks": [],
-      "comments": []
+      "subtasks": [
+        {
+          "subtask_title": "Design about UI"
+        }
+      ],
+      "comments": [
+        {
+          "text": "About page design is pending."
+        }
+      ]
     },
     {
       "id": "4",
@@ -66,17 +74,16 @@
       "priority": "Low",
       "status": "Completed",
       "assignedTo": "Tom",
-      "subtasks": [],
-      "comments": []
-    },
-    {
-      "taskName": "gbhknkk",
-      "description": " nnknk",
-      "dueDate": "2024-09-25T18:30:00.000Z",
-      "priority": "Medium",
-      "status": "In Progress",
-      "assignedTo": "Roy",
-      "id": "b3d5"
+      "subtasks": [
+        {
+          "subtask_title": "Add contact detils with usernames"
+        }
+      ],
+      "comments": [
+        {
+          "text": "Add blue color lables for contact details."
+        }
+      ]
     }
   ]
 }

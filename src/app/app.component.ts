@@ -7,7 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CoreService } from './core/core.service';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
-import {TaskDetailComponentComponent} from './task-detail-component/task-detail-component.component';
+import { TaskDetailComponent } from './task-detail-component/task-detail-component';
 
 @Component({
   selector: 'app-root',
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     private _dialog: MatDialog,
     private _taskService: TaskService,
     private _coreService: CoreService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getTaskList();
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
   // Open the Add/Edit Task Form
   openAddEditTaskForm() {
     const dialogRef = this._dialog.open(TaskAddEditComponent);
-    
+
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // Fetch Task List from the Service
+  // Fetch Task List 
   getTaskList() {
     this._taskService.getTaskList().subscribe({
       next: (res) => {
@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // Apply filter on the task list
+  // Filter the Task List
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -77,12 +77,12 @@ export class AppComponent implements OnInit {
     }
   }
 
-  // Delete a task by ID
-
+  // Open the Delete Confirmation Dialog
   openDeleteConfirmation(id: number) {
     const dialogRef = this._dialog.open(DeleteConfirmationDialogComponent);
-  
+
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      // Delete the task if confirmed
       if (confirmed) {
         this._taskService.deleteTask(id).subscribe({
           next: (res) => {
@@ -94,21 +94,11 @@ export class AppComponent implements OnInit {
       }
     });
   }
-  
-  // deleteTask(id: number) {
-  //   this._taskService.deleteTask(id).subscribe({
-  //     next: (res) => {
-  //       this._coreService.openSnackBar('Task deleted!', 'done');
-  //       this.getTaskList();
-  //     },
-  //     error: console.log,
-  //   });
-  // }
 
-  // Open the Edit Task Form with Data
+  // Open the Edit Task Form 
   openEditForm(data: any) {
     const dialogRef = this._dialog.open(TaskAddEditComponent, {
-      data, // Passing the task data for editing
+      data,
     });
 
     dialogRef.afterClosed().subscribe({

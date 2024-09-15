@@ -4,10 +4,10 @@ import { TaskService } from '../services/task.service';
 
 @Component({
   selector: 'app-task-detail-component',
-  templateUrl: './task-detail-component.component.html',
-  styleUrls: ['./task-detail-component.component.scss']
+  templateUrl: './task-detail-component.html',
+  styleUrls: ['./task-detail-component.scss']
 })
-export class TaskDetailComponentComponent implements OnInit {
+export class TaskDetailComponent implements OnInit {
   taskId!: number;
   taskData: any;
   newSubtask: string = '';
@@ -16,7 +16,7 @@ export class TaskDetailComponentComponent implements OnInit {
   constructor(
     private router: Router, private route: ActivatedRoute,
     private taskService: TaskService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.taskId = +this.route.snapshot.paramMap.get('id')!;
@@ -38,10 +38,10 @@ export class TaskDetailComponentComponent implements OnInit {
 
   addSubtask() {
     if (this.newSubtask.trim()) {
-      const subtask = { subtask_title: this.newSubtask.trim() }; // Ensure this matches server expectations
+      const subtask = { subtask_title: this.newSubtask.trim() };
       this.taskService.addSubtask(this.taskId, subtask).subscribe({
         next: (updatedTask: any) => {
-          this.taskData = updatedTask; // Update taskData with the complete updated task
+          this.taskData = updatedTask;
           this.newSubtask = '';
         },
         error: (err: any) => console.error(err)
@@ -51,10 +51,10 @@ export class TaskDetailComponentComponent implements OnInit {
 
   addComment() {
     if (this.newComment.trim()) {
-      const comment = { text: this.newComment.trim() }; // Ensure this matches server expectations
+      const comment = { text: this.newComment.trim() };
       this.taskService.addComment(this.taskId, comment).subscribe({
         next: (updatedTask: any) => {
-          this.taskData = updatedTask; // Update taskData with the complete updated task
+          this.taskData = updatedTask;
           this.newComment = '';
         },
         error: (err: any) => console.error(err)

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,12 +21,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { TaskDetailComponentComponent } from './task-detail-component/task-detail-component.component';
+import { TaskDetailComponent } from './task-detail-component/task-detail-component';
 import { AllTasksComponent } from './all-tasks/all-tasks.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, TaskAddEditComponent, DeleteConfirmationDialogComponent, TaskDetailComponentComponent, AllTasksComponent],
+  declarations: [AppComponent, TaskAddEditComponent, DeleteConfirmationDialogComponent, TaskDetailComponent, AllTasksComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -53,4 +52,4 @@ import { FormsModule } from '@angular/forms';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
