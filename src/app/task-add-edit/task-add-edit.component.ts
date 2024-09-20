@@ -31,48 +31,48 @@ export class TaskAddEditComponent implements OnInit {
   ];
 
   constructor(
-    private _fb: FormBuilder,
-    private _taskService: TaskService,
-    private _dialogRef: MatDialogRef<TaskAddEditComponent>,
+    private formBuilder: FormBuilder,
+    private taskService: TaskService,
+    private dialogRef: MatDialogRef<TaskAddEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _coreService: CoreService
+    private coreService: CoreService
   ) {
-    this.taskForm = this._fb.group({
-      taskName: '',
-      description: '',
-      dueDate: '',
-      priority: '',
-      status: '',
-      assignedTo: '',
+    this.taskForm = this.formBuilder.group({
+      taskName: ['', Validators.required],
+      description: ['', Validators.required],
+      dueDate: ['', Validators.required],
+      priority: ['', Validators.required],
+      status: ['', Validators.required],
+      assignedTo: [''],
     });
   }
 
   ngOnInit(): void {
-    this.taskForm.patchValue(this.data);
+    if (this.data) {
+      this.taskForm.patchValue(this.data);
+    }
   }
 
   onFormSubmit() {
     if (this.taskForm.valid) {
       if (this.data) {
-        this._taskService
-          .updateTask(this.data.id, this.taskForm.value)
-          .subscribe({
-            next: (val: any) => {
-              this._coreService.openSnackBar('Task detail updated!');
-              this._dialogRef.close(true);
-            },
-            error: (err: any) => {
-              console.error(err);
-            },
-          });
-      } else {
-        this._taskService.addTask(this.taskForm.value).subscribe({
-          next: (val: any) => {
-            this._coreService.openSnackBar('Task added successfully');
-            this._dialogRef.close(true);
+        this.taskService.updateTask(this.data.id, this.taskForm.value).subscribe({
+          next: (response: any) => {
+            this.coreService.openSnackBar('Task detail updated!');
+            this.dialogRef.close(true);
           },
-          error: (err: any) => {
-            console.error(err);
+          error: (error: any) => {
+            console.error(error);
+          },
+        });
+      } else {
+        this.taskService.addTask(this.taskForm.value).subscribe({
+          next: (response: any) => {
+            this.coreService.openSnackBar('Task added successfully');
+            this.dialogRef.close(true);
+          },
+          error: (error: any) => {
+            console.error(error);
           },
         });
       }

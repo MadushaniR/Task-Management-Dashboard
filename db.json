@@ -14,6 +14,9 @@
         },
         {
           "subtask_title": "Implement validation"
+        },
+        {
+          "subtask_title": "login page should contain 2 input fields"
         }
       ],
       "comments": [
@@ -22,6 +25,9 @@
         },
         {
           "text": "We might need to change validation for edge cases."
+        },
+        {
+          "text": "This section should start before starting the product section"
         }
       ]
     },
@@ -84,6 +90,15 @@
           "text": "Add blue color lables for contact details."
         }
       ]
+    },
+    {
+      "id": "16b4",
+      "taskName": "Fix errors in product page",
+      "description": "There are some validation issues present in the product page",
+      "dueDate": "2024-09-23T18:30:00.000Z",
+      "priority": "Medium",
+      "status": "In Progress",
+      "assignedTo": "Roy"
     }
   ]
 }
