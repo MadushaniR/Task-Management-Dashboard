@@ -14,10 +14,6 @@ import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog
   styleUrls: ['./all-tasks.component.scss']
 })
 export class AllTasksComponent implements OnInit {
-
-  title(title: any) {
-    throw new Error('Method not implemented.');
-  }
   displayedColumns: string[] = [
     'taskName',
     'description',
@@ -40,22 +36,52 @@ export class AllTasksComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTaskList();
+    this.subscribeToRealTimeUpdates(); // Subscribe to WebSocket updates
   }
 
-  // Open the Add/Edit Task Form
+  // Open Add/Edit Task Form
   openAddEditTaskForm() {
     const dialogRef = this._dialog.open(TaskAddEditComponent);
-
-    dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
-          this.getTaskList();
-        }
-      },
+    dialogRef.afterClosed().subscribe(val => {
+      if (val) {
+        this.getTaskList();
+      }
     });
   }
 
-  // Fetch Task List from the Service
+  // Open Edit Task Form
+  openEditForm(taskData: any) {
+    const dialogRef = this._dialog.open(TaskAddEditComponent, {
+      data: taskData, // Pass the task data to the form for editing
+    });
+
+    dialogRef.afterClosed().subscribe(val => {
+      if (val) {
+        this.getTaskList(); // Refresh the task list after editing
+      }
+    });
+  }
+
+  // Open Delete Confirmation Dialog
+  openDeleteConfirmation(taskId: number) {
+    const dialogRef = this._dialog.open(DeleteConfirmationDialogComponent, {
+      data: { id: taskId } // Pass the task ID to the delete confirmation dialog
+    });
+
+    dialogRef.afterClosed().subscribe(val => {
+      if (val) {
+        this._taskService.deleteTask(taskId).subscribe({
+          next: () => {
+            this._coreService.openSnackBar('Task deleted successfully');
+            this.getTaskList(); // Refresh the task list after deletion
+          },
+          error: console.log,
+        });
+      }
+    });
+  }
+
+  // Fetch Task List
   getTaskList() {
     this._taskService.getTaskList().subscribe({
       next: (res) => {
@@ -67,45 +93,21 @@ export class AllTasksComponent implements OnInit {
     });
   }
 
-  // Apply filter on the task list
+  // Apply filter to the task list
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
-  // Delete a task by ID
-  openDeleteConfirmation(id: number) {
-    const dialogRef = this._dialog.open(DeleteConfirmationDialogComponent);
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        this._taskService.deleteTask(id).subscribe({
-          next: (res) => {
-            this._coreService.openSnackBar('Task deleted!', 'done');
-            this.getTaskList();
-          },
-          error: console.log,
-        });
+  // Subscribe to WebSocket updates for real-time task changes
+  subscribeToRealTimeUpdates() {
+    this._taskService.subscribeToTaskUpdates().subscribe((message) => {
+      if (message) {
+        this.getTaskList(); // Fetch updated task list on any WebSocket event
       }
     });
   }
-
-  // Open the Edit Task Form with Data
-  openEditForm(data: any) {
-    const dialogRef = this._dialog.open(TaskAddEditComponent, {
-      data, // Passing the task data for editing
-    });
-
-    dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
-          this.getTaskList();
-        }
-      },
-    });
-  }
 }
-
