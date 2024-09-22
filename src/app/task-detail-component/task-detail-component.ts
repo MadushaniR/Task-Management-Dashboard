@@ -9,7 +9,7 @@ import { TaskService } from '../services/task.service';
 })
 export class TaskDetailComponent implements OnInit {
   taskId!: number;
-  taskData: any;
+  taskData: any = { subtasks: [], comments: [] }; // Initialize with empty arrays
   newSubtask: string = '';
   newComment: string = '';
 
@@ -21,16 +21,18 @@ export class TaskDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.taskId = +this.route.snapshot.paramMap.get('id')!;
-    console.log(this.taskId); // Log the ID to check
     this.getTaskDetails();
+    this.subscribeToRealTimeUpdates(); // Subscribe to updates on init
   }
   
-
   // Fetch task details by ID
   getTaskDetails() {
     this.taskService.getTaskById(this.taskId).subscribe({
       next: (data: any) => {
         this.taskData = data;
+        // Ensure subtasks and comments are initialized
+        this.taskData.subtasks = this.taskData.subtasks || [];
+        this.taskData.comments = this.taskData.comments || [];
       },
       error: (err: any) => console.error(err)
     });
@@ -46,9 +48,9 @@ export class TaskDetailComponent implements OnInit {
     if (this.newSubtask.trim()) {
       const subtask = { subtask_title: this.newSubtask.trim() };
       this.taskService.addSubtask(this.taskId, subtask).subscribe({
-        next: (updatedTask: any) => {
-          this.taskData = updatedTask;
-          this.newSubtask = '';
+        next: () => {
+          this.newSubtask = ''; // Clear input
+          this.getTaskDetails(); // Fetch updated task details
         },
         error: (err: any) => console.error(err)
       });
@@ -60,9 +62,9 @@ export class TaskDetailComponent implements OnInit {
     if (this.newComment.trim()) {
       const comment = { text: this.newComment.trim() };
       this.taskService.addComment(this.taskId, comment).subscribe({
-        next: (updatedTask: any) => {
-          this.taskData = updatedTask;
-          this.newComment = '';
+        next: () => {
+          this.newComment = ''; // Clear input
+          this.getTaskDetails(); // Fetch updated task details
         },
         error: (err: any) => console.error(err)
       });
