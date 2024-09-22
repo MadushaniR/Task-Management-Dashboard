@@ -39,7 +39,7 @@ export class TaskAddEditComponent implements OnInit {
   ) {
     this.taskForm = this.formBuilder.group({
       taskName: ['', Validators.required],
-      description: ['', Validators.required],
+      description: [''],
       dueDate: ['', Validators.required],
       priority: ['', Validators.required],
       status: ['', Validators.required],
