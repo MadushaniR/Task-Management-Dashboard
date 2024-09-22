@@ -57,24 +57,36 @@ export class TaskService {
     return this._http.get(`http://localhost:3000/tasks/${id}`);
   }
 
-  // add a subtask
-  addSubtask(taskId: number, subtask: any): Observable<any> {
-    return this._http.get(`${this.baseUrl}/${taskId}`).pipe(
-      switchMap((task: any) => {
-        const updatedTask = { ...task, subtasks: [...task.subtasks, subtask] };
-        return this._http.put(`${this.baseUrl}/${taskId}`, updatedTask);
-      })
-    );
-  }
+ // Add a Subtask
+addSubtask(taskId: number, subtask: any): Observable<any> {
+  return this._http.get(`${this.baseUrl}/${taskId}`).pipe(
+    switchMap((task: any) => {
+      const updatedTask = { ...task, subtasks: [...(task.subtasks || []), subtask] };
+      return this._http.put(`${this.baseUrl}/${taskId}`, updatedTask).pipe(
+        switchMap(() => {
+          // Broadcast the subtask addition via WebSocket
+          this._webSocketService.sendMessage({ type: 'subtask-added', taskId, subtask });
+          return this.getTaskList(); // Optionally, return the updated task list
+        })
+      );
+    })
+  );
+}
 
-  // add a comment
-  addComment(taskId: number, comment: any): Observable<any> {
-    return this._http.get(`${this.baseUrl}/${taskId}`).pipe(
-      switchMap((task: any) => {
-        const updatedTask = { ...task, comments: [...task.comments, comment] };
-        return this._http.put(`${this.baseUrl}/${taskId}`, updatedTask);
-      })
-    );
-  }
+// Add a Comment
+addComment(taskId: number, comment: any): Observable<any> {
+  return this._http.get(`${this.baseUrl}/${taskId}`).pipe(
+    switchMap((task: any) => {
+      const updatedTask = { ...task, comments: [...(task.comments || []), comment] };
+      return this._http.put(`${this.baseUrl}/${taskId}`, updatedTask).pipe(
+        switchMap(() => {
+          // Broadcast the comment addition via WebSocket
+          this._webSocketService.sendMessage({ type: 'comment-added', taskId, comment });
+          return this.getTaskList(); // Optionally, return the updated task list
+        })
+      );
+    })
+  );
+}
 
 }

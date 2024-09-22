@@ -106,7 +106,16 @@ export class AllTasksComponent implements OnInit {
   subscribeToRealTimeUpdates() {
     this._taskService.subscribeToTaskUpdates().subscribe((message) => {
       if (message) {
-        this.getTaskList(); // Fetch updated task list on any WebSocket event
+        // Check message type and handle accordingly
+        switch (message.type) {
+          case 'task-added':
+          case 'task-updated':
+          case 'task-deleted':
+            this.getTaskList(); // Fetch updated task list on any relevant event
+            break;
+          default:
+            break; // Ignore other message types
+        }
       }
     });
   }
