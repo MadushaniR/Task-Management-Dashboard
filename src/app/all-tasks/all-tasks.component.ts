@@ -7,6 +7,10 @@ import { TaskService } from '../services/task.service';
 import { CoreService } from '../core/core.service';
 import { TaskAddEditComponent } from '../task-add-edit/task-add-edit.component';
 import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { Select, Store } from '@ngxs/store';
+import { GetTaskList, DeleteTask } from '../store/actions/task.actions';
+import { TaskState } from '../services/tasks.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-all-tasks',
@@ -14,10 +18,6 @@ import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog
   styleUrls: ['./all-tasks.component.scss']
 })
 export class AllTasksComponent implements OnInit {
-
-  title(title: any) {
-    throw new Error('Method not implemented.');
-  }
   displayedColumns: string[] = [
     'taskName',
     'description',
@@ -32,60 +32,53 @@ export class AllTasksComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  @Select(TaskState.getTaskList) tasks$!: Observable<any[]>;
+
   constructor(
     private _dialog: MatDialog,
     private _taskService: TaskService,
-    private _coreService: CoreService
-  ) { }
+    private _coreService: CoreService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     this.getTaskList();
+    this.subscribeToRealTimeUpdates(); 
+    this.tasks$.subscribe((tasks) => {
+      this.dataSource = new MatTableDataSource(tasks);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
-  // Open the Add/Edit Task Form
   openAddEditTaskForm() {
     const dialogRef = this._dialog.open(TaskAddEditComponent);
-
-    dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
-          this.getTaskList();
-        }
-      },
+    dialogRef.afterClosed().subscribe(val => {
+      if (val) {
+        this.store.dispatch(new GetTaskList());
+      }
     });
   }
 
-  // Fetch Task List from the Service
-  getTaskList() {
-    this._taskService.getTaskList().subscribe({
-      next: (res) => {
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      },
-      error: console.log,
+  openEditForm(taskData: any) {
+    const dialogRef = this._dialog.open(TaskAddEditComponent, { data: taskData });
+    dialogRef.afterClosed().subscribe(val => {
+      if (val) {
+        this.store.dispatch(new GetTaskList());
+      }
     });
   }
 
-  // Apply filter on the task list
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  // Delete a task by ID
-  openDeleteConfirmation(id: number) {
-    const dialogRef = this._dialog.open(DeleteConfirmationDialogComponent);
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        this._taskService.deleteTask(id).subscribe({
-          next: (res) => {
-            this._coreService.openSnackBar('Task deleted!', 'done');
-            this.getTaskList();
+  openDeleteConfirmation(taskId: number) {
+    const dialogRef = this._dialog.open(DeleteConfirmationDialogComponent, {
+      data: { id: taskId }
+    });
+    dialogRef.afterClosed().subscribe(val => {
+      if (val) {
+        this.store.dispatch(new DeleteTask(taskId)).subscribe({
+          next: () => {
+            this._coreService.openSnackBar('Task deleted successfully');
+            this.store.dispatch(new GetTaskList());
           },
           error: console.log,
         });
@@ -93,19 +86,33 @@ export class AllTasksComponent implements OnInit {
     });
   }
 
-  // Open the Edit Task Form with Data
-  openEditForm(data: any) {
-    const dialogRef = this._dialog.open(TaskAddEditComponent, {
-      data, // Passing the task data for editing
+  getTaskList() {
+    this.store.dispatch(new GetTaskList()).subscribe({
+      error: console.log,
     });
+  }
 
-    dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
-          this.getTaskList();
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  subscribeToRealTimeUpdates() {
+    this._taskService.subscribeToTaskUpdates().subscribe((message) => {
+      if (message) {
+        switch (message.type) {
+          case 'task-added':
+          case 'task-updated':
+          case 'task-deleted':
+            this.store.dispatch(new GetTaskList());
+            break;
+          default:
+            break;
         }
-      },
+      }
     });
   }
 }
-

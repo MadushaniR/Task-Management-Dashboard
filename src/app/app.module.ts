@@ -24,6 +24,8 @@ import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/
 import { TaskDetailComponent } from './task-detail-component/task-detail-component';
 import { AllTasksComponent } from './all-tasks/all-tasks.component';
 import { FormsModule } from '@angular/forms';
+import { NgxsModule } from '@ngxs/store';
+import { TaskState } from '../app/services/tasks.state';
 
 @NgModule({
   declarations: [AppComponent, TaskAddEditComponent, DeleteConfirmationDialogComponent, TaskDetailComponent, AllTasksComponent],
@@ -48,6 +50,7 @@ import { FormsModule } from '@angular/forms';
     MatSortModule,
     MatSnackBarModule,
     FormsModule,
+    NgxsModule.forRoot([TaskState]),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -9,24 +9,36 @@ import { TaskService } from '../services/task.service';
 })
 export class TaskDetailComponent implements OnInit {
   taskId!: number;
-  taskData: any;
+  taskData: any = { subtasks: [], comments: [] };
   newSubtask: string = '';
   newComment: string = '';
 
   constructor(
-    private router: Router, private route: ActivatedRoute,
+    private router: Router, 
+    private route: ActivatedRoute,
     private taskService: TaskService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.taskId = +this.route.snapshot.paramMap.get('id')!;
-    this.getTaskDetails();
-  }
+    const idParam = this.route.snapshot.paramMap.get('id');
+    this.taskId = idParam ? parseInt(idParam, 10) : NaN;
 
+    if (!isNaN(this.taskId)) {
+      this.getTaskDetails();
+    } else {
+      console.error('Invalid task ID:', idParam);
+      this.goBack();
+    }
+
+    this.subscribeToRealTimeUpdates(); 
+  }
+  
   getTaskDetails() {
     this.taskService.getTaskById(this.taskId).subscribe({
       next: (data: any) => {
         this.taskData = data;
+        this.taskData.subtasks = this.taskData.subtasks || [];
+        this.taskData.comments = this.taskData.comments || [];
       },
       error: (err: any) => console.error(err)
     });
@@ -40,9 +52,9 @@ export class TaskDetailComponent implements OnInit {
     if (this.newSubtask.trim()) {
       const subtask = { subtask_title: this.newSubtask.trim() };
       this.taskService.addSubtask(this.taskId, subtask).subscribe({
-        next: (updatedTask: any) => {
-          this.taskData = updatedTask;
+        next: () => {
           this.newSubtask = '';
+          this.getTaskDetails();
         },
         error: (err: any) => console.error(err)
       });
@@ -53,12 +65,20 @@ export class TaskDetailComponent implements OnInit {
     if (this.newComment.trim()) {
       const comment = { text: this.newComment.trim() };
       this.taskService.addComment(this.taskId, comment).subscribe({
-        next: (updatedTask: any) => {
-          this.taskData = updatedTask;
+        next: () => {
           this.newComment = '';
+          this.getTaskDetails();
         },
         error: (err: any) => console.error(err)
       });
     }
+  }
+
+  subscribeToRealTimeUpdates() {
+    this.taskService.subscribeToTaskUpdates().subscribe((message: any) => {
+      if (message && message.data && message.data.id === this.taskId) {
+        this.getTaskDetails();
+      }
+    });
   }
 }

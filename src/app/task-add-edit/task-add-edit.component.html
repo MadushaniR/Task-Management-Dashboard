@@ -7,13 +7,19 @@
             <mat-form-field appearance="outline">
                 <mat-label>Task Name</mat-label>
                 <input matInput type="text" placeholder="Task 1" formControlName="taskName" required>
+                <mat-error *ngIf="taskForm.get('taskName')?.hasError('required')">
+                    Task Name is required
+                </mat-error>
             </mat-form-field>
         </div>
 
         <div class="row">
             <mat-form-field appearance="outline">
                 <mat-label>Description</mat-label>
-                <input matInput placeholder="this is task 1" formControlName="description">
+                <input matInput placeholder="This is task 1" formControlName="description" required>
+                <mat-error *ngIf="taskForm.get('description')?.hasError('required')">
+                    Description is required
+                </mat-error>
             </mat-form-field>
         </div>
 
@@ -22,6 +28,9 @@
                 <mat-label>Due Date</mat-label>
                 <input matInput [matDatepicker]="picker" formControlName="dueDate" required>
                 <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-error *ngIf="taskForm.get('dueDate')?.hasError('required')">
+                    Due Date is required
+                </mat-error>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -30,11 +39,13 @@
         <div class="row">
             <mat-form-field appearance="outline">
                 <mat-label>Status</mat-label>
-                <mat-select formControlName="status">
+                <mat-select formControlName="status" required>
                     <mat-option *ngFor="let val of status" [value]="val">{{val}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="taskForm.get('status')?.hasError('required')">
+                    Status is required
+                </mat-error>
             </mat-form-field>
-
         </div>
 
         <div class="row">
@@ -43,7 +54,11 @@
                 <mat-select formControlName="priority" required>
                     <mat-option *ngFor="let val of priority" [value]="val">{{val}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="taskForm.get('priority')?.hasError('required')">
+                    Priority is required
+                </mat-error>
             </mat-form-field>
+
             <mat-form-field appearance="outline">
                 <mat-label>Assigned To</mat-label>
                 <mat-select formControlName="assignedTo">
@@ -52,7 +67,7 @@
             </mat-form-field>
         </div>
     </div>
-    
+
     <div mat-dialog-actions class="action">
         <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
         <button mat-raised-button color="primary" type="submit">{{data ? 'Update' : 'Save'}}</button>
