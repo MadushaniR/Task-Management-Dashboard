@@ -10,11 +10,9 @@ export class TaskService {
   private baseUrl = 'http://localhost:3000/tasks';
   constructor(private _http: HttpClient, private _webSocketService: WebSocketService) { }
 
-  // Add Task
   addTask(data: any): Observable<any> {
     return this._http.post(this.baseUrl, data).pipe(
       switchMap(() => {
-        // After task is created, broadcast the update via WebSocket
         this._webSocketService.sendMessage({ type: 'task-added', data });
         return this.getTaskList();
       })
@@ -25,7 +23,6 @@ export class TaskService {
   updateTask(id: number, data: any): Observable<any> {
     return this._http.put(`${this.baseUrl}/${id}`, data).pipe(
       switchMap(() => {
-        // Broadcast the update via WebSocket
         this._webSocketService.sendMessage({ type: 'task-updated', data });
         return this.getTaskList();
       })
@@ -36,7 +33,6 @@ export class TaskService {
   deleteTask(id: number): Observable<any> {
     return this._http.delete(`${this.baseUrl}/${id}`).pipe(
       switchMap(() => {
-        // Broadcast the deletion via WebSocket
         this._webSocketService.sendMessage({ type: 'task-deleted', id });
         return this.getTaskList();
       })
@@ -69,9 +65,8 @@ addSubtask(taskId: number, subtask: any): Observable<any> {
       const updatedTask = { ...task, subtasks: [...(task.subtasks || []), subtask] };
       return this._http.put(`${this.baseUrl}/${taskId}`, updatedTask).pipe(
         switchMap(() => {
-          // Broadcast the subtask addition via WebSocket
           this._webSocketService.sendMessage({ type: 'subtask-added', taskId, subtask });
-          return this.getTaskList(); // Optionally, return the updated task list
+          return this.getTaskList(); 
         })
       );
     })
@@ -85,9 +80,8 @@ addComment(taskId: number, comment: any): Observable<any> {
       const updatedTask = { ...task, comments: [...(task.comments || []), comment] };
       return this._http.put(`${this.baseUrl}/${taskId}`, updatedTask).pipe(
         switchMap(() => {
-          // Broadcast the comment addition via WebSocket
           this._webSocketService.sendMessage({ type: 'comment-added', taskId, comment });
-          return this.getTaskList(); // Optionally, return the updated task list
+          return this.getTaskList(); 
         })
       );
     })

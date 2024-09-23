@@ -8,7 +8,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class WebSocketService {
   private socket$: WebSocketSubject<any> | undefined;
 
-  // BehaviorSubject to emit real-time task updates
   private taskUpdates$ = new BehaviorSubject<any>(null);
 
   constructor() { }
@@ -18,9 +17,9 @@ export class WebSocketService {
     if (!this.socket$ || this.socket$.closed) {
       this.socket$ = new WebSocketSubject(url);
       this.socket$.subscribe(
-        message => this.taskUpdates$.next(message), // On message
-        error => console.error('WebSocket error', error), // On error
-        () => console.warn('WebSocket connection closed') // On close
+        message => this.taskUpdates$.next(message), 
+        error => console.error('WebSocket error', error), 
+        () => console.warn('WebSocket connection closed') 
       );
     }
   }
