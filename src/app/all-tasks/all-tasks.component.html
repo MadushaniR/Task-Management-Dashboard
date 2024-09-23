@@ -49,9 +49,10 @@
                     <button mat-icon-button color="warn" (click)="openDeleteConfirmation(row.id)">
                         <mat-icon>delete</mat-icon>
                     </button>
-                    <button mat-icon-button color="accent" [routerLink]="['/view-task', row.id.toString()]" >
+                    <button mat-icon-button color="accent" [routerLink]="['/view-task', row.id]">
                         <mat-icon>visibility</mat-icon>
-                    </button>
+                      </button>
+                      
                 </td>
             </ng-container>
 

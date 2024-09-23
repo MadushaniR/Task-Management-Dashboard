@@ -9,7 +9,7 @@ import { TaskService } from '../services/task.service';
 })
 export class TaskDetailComponent implements OnInit {
   taskId!: number;
-  taskData: any = { subtasks: [], comments: [] }; // Initialize with empty arrays
+  taskData: any = { subtasks: [], comments: [] };
   newSubtask: string = '';
   newComment: string = '';
 
@@ -17,20 +17,26 @@ export class TaskDetailComponent implements OnInit {
     private router: Router, 
     private route: ActivatedRoute,
     private taskService: TaskService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.taskId = +this.route.snapshot.paramMap.get('id')!;
-    this.getTaskDetails();
-    this.subscribeToRealTimeUpdates(); // Subscribe to updates on init
+    const idParam = this.route.snapshot.paramMap.get('id');
+    this.taskId = idParam ? parseInt(idParam, 10) : NaN;
+
+    if (!isNaN(this.taskId)) {
+      this.getTaskDetails();
+    } else {
+      console.error('Invalid task ID:', idParam);
+      this.goBack();
+    }
+
+    this.subscribeToRealTimeUpdates(); 
   }
   
-  // Fetch task details by ID
   getTaskDetails() {
     this.taskService.getTaskById(this.taskId).subscribe({
       next: (data: any) => {
         this.taskData = data;
-        // Ensure subtasks and comments are initialized
         this.taskData.subtasks = this.taskData.subtasks || [];
         this.taskData.comments = this.taskData.comments || [];
       },
@@ -38,44 +44,40 @@ export class TaskDetailComponent implements OnInit {
     });
   }
 
-  // Navigate back to task list
   goBack(): void {
     this.router.navigate(['/tasks']);
   }
 
-  // Add a subtask to the task
   addSubtask() {
     if (this.newSubtask.trim()) {
       const subtask = { subtask_title: this.newSubtask.trim() };
       this.taskService.addSubtask(this.taskId, subtask).subscribe({
         next: () => {
-          this.newSubtask = ''; // Clear input
-          this.getTaskDetails(); // Fetch updated task details
+          this.newSubtask = '';
+          this.getTaskDetails();
         },
         error: (err: any) => console.error(err)
       });
     }
   }
 
-  // Add a comment to the task
   addComment() {
     if (this.newComment.trim()) {
       const comment = { text: this.newComment.trim() };
       this.taskService.addComment(this.taskId, comment).subscribe({
         next: () => {
-          this.newComment = ''; // Clear input
-          this.getTaskDetails(); // Fetch updated task details
+          this.newComment = '';
+          this.getTaskDetails();
         },
         error: (err: any) => console.error(err)
       });
     }
   }
 
-  // Subscribe to WebSocket updates for real-time task changes
   subscribeToRealTimeUpdates() {
     this.taskService.subscribeToTaskUpdates().subscribe((message: any) => {
       if (message && message.data && message.data.id === this.taskId) {
-        this.getTaskDetails(); // Refresh the task details if this task was updated
+        this.getTaskDetails();
       }
     });
   }

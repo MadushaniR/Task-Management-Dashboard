@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 import { WebSocketService } from './websocket.service';
 
 @Injectable({
@@ -53,9 +53,14 @@ export class TaskService {
     return this._webSocketService.getTaskUpdates();
   }
 
+
+
   getTaskById(id: number): Observable<any> {
-    return this._http.get(`http://localhost:3000/tasks/${id}`);
+    return this._http.get<any>(`http://localhost:3000/tasks/${id}`).pipe(
+      tap(data => console.log('Fetched task details:', data))
+    );
   }
+  
 
  // Add a Subtask
 addSubtask(taskId: number, subtask: any): Observable<any> {
