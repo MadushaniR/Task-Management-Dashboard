@@ -7,6 +7,10 @@ import { TaskService } from '../services/task.service';
 import { CoreService } from '../core/core.service';
 import { TaskAddEditComponent } from '../task-add-edit/task-add-edit.component';
 import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { Select, Store } from '@ngxs/store';
+import { GetTaskList, DeleteTask } from '../store/actions/task.actions';
+import { TaskState } from '../services/tasks.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-all-tasks',
@@ -28,15 +32,23 @@ export class AllTasksComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  @Select(TaskState.getTaskList) tasks$!: Observable<any[]>; // Use getTaskList instead of getTasks
+
   constructor(
     private _dialog: MatDialog,
     private _taskService: TaskService,
-    private _coreService: CoreService
-  ) { }
+    private _coreService: CoreService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     this.getTaskList();
     this.subscribeToRealTimeUpdates(); // Subscribe to WebSocket updates
+    this.tasks$.subscribe((tasks) => {
+      this.dataSource = new MatTableDataSource(tasks);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   // Open Add/Edit Task Form
@@ -44,7 +56,7 @@ export class AllTasksComponent implements OnInit {
     const dialogRef = this._dialog.open(TaskAddEditComponent);
     dialogRef.afterClosed().subscribe(val => {
       if (val) {
-        this.getTaskList();
+        this.store.dispatch(new GetTaskList()); // Dispatch action to refresh task list
       }
     });
   }
@@ -57,7 +69,7 @@ export class AllTasksComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(val => {
       if (val) {
-        this.getTaskList(); // Refresh the task list after editing
+        this.store.dispatch(new GetTaskList()); // Refresh the task list after editing
       }
     });
   }
@@ -70,10 +82,10 @@ export class AllTasksComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(val => {
       if (val) {
-        this._taskService.deleteTask(taskId).subscribe({
+        this.store.dispatch(new DeleteTask(taskId)).subscribe({
           next: () => {
             this._coreService.openSnackBar('Task deleted successfully');
-            this.getTaskList(); // Refresh the task list after deletion
+            this.store.dispatch(new GetTaskList()); // Refresh the task list after deletion
           },
           error: console.log,
         });
@@ -83,12 +95,7 @@ export class AllTasksComponent implements OnInit {
 
   // Fetch Task List
   getTaskList() {
-    this._taskService.getTaskList().subscribe({
-      next: (res) => {
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      },
+    this.store.dispatch(new GetTaskList()).subscribe({
       error: console.log,
     });
   }
@@ -111,7 +118,7 @@ export class AllTasksComponent implements OnInit {
           case 'task-added':
           case 'task-updated':
           case 'task-deleted':
-            this.getTaskList(); // Fetch updated task list on any relevant event
+            this.store.dispatch(new GetTaskList()); // Fetch updated task list on any relevant event
             break;
           default:
             break; // Ignore other message types
